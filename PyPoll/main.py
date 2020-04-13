@@ -1,15 +1,15 @@
 # Importing dependencies
 import os
 import csv
-import _collections
-from _collections import _count_elements
+import collections
+from collections import Counter
 
 # Setting directories
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
 # Input file path
-InputFilePath = os.path.join("Resources", "elections_data.csv")
+InputFilePath = os.path.join("Resources", "election_data.csv")
 # Output file path
 OutputFilePath = os.path.join("Results", "PyPoll.txt")
 
@@ -31,23 +31,21 @@ with open(InputFilePath, newline="") as file:
     # Sorting the list of candidates
     SortedCandidates = sorted(Candidates)
 
-    # count votes per candidate in most common outcome order and append to a list
-    CandiateCount = _count_elements(SortedCandidates)
-    VotesPerCandidate.append(CandiateCount.most_common())
+    # Counting votes per candidate
+    CandidateCount = Counter(SortedCandidates)
+    VotesPerCandidate.append(CandidateCount.most_common())
 
-    # calculate the percentage of votes per candicate in 3 digital points
+    # Calculating percentages
     for item in VotesPerCandidate:
-        first = format((item[0][1]) * 100 / (sum(CandiateCount.values())), '.3f')
-        second = format((item[1][1]) * 100 / (sum(CandiateCount.values())), '.3f')
-        third = format((item[2][1]) * 100 / (sum(CandiateCount.values())), '.3f')
-        fourth = format((item[3][1]) * 100 / (sum(CandiateCount.values())), '.3f')
+        first = format((item[0][1]) * 100 / (sum(CandidateCount.values())), '.3f')
+        second = format((item[1][1]) * 100 / (sum(CandidateCount.values())), '.3f')
+        third = format((item[2][1]) * 100 / (sum(CandidateCount.values())), '.3f')
+        fourth = format((item[3][1]) * 100 / (sum(CandidateCount.values())), '.3f')
 
-
-
-# -->>  Print the analysis to the terminal
+#  Printing the analysis to terminal
 print("Election Results")
 print("-------------------------")
-print(f"Total Votes:  {sum(CandiateCount.values())}")
+print(f"Total Votes:  {sum(CandidateCount.values())}")
 print("-------------------------")
 print(f"{VotesPerCandidate[0][0][0]}: {first}% ({VotesPerCandidate[0][0][1]})")
 print(f"{VotesPerCandidate[0][1][0]}: {second}% ({VotesPerCandidate[0][1][1]})")
@@ -57,12 +55,11 @@ print("-------------------------")
 print(f"Winner:  {VotesPerCandidate[0][0][0]}")
 print("-------------------------")
 
-# -->>  Export a text file with the results
-
+# Exporting to a text file
 with open(OutputFilePath, "w") as outfile:
     outfile.write("Election Results\n")
     outfile.write("-------------------------\n")
-    outfile.write(f"Total Votes:  {sum(CandiateCount.values())}\n")
+    outfile.write(f"Total Votes:  {sum(CandidateCount.values())}\n")
     outfile.write("-------------------------\n")
     outfile.write(f"{VotesPerCandidate[0][0][0]}: {first}% ({VotesPerCandidate[0][0][1]})\n")
     outfile.write(f"{VotesPerCandidate[0][1][0]}: {second}% ({VotesPerCandidate[0][1][1]})\n")

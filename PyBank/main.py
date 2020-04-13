@@ -6,10 +6,12 @@ import csv
 abspath = os.path.abspath(__file__)
 dname = os.path.dirname(abspath)
 os.chdir(dname)
+
 # Input path file
-budget_data_csv_path = os.path.join("Resources", "budget_data.csv")
+InputFilePath = os.path.join("Resources", "budget_data.csv")
+
 # Output path file
-budget_file = os.path.join("Results", "output.txt")
+OutputFilePath = os.path.join("Results", "output.txt")
 
 # variables
 Months = []
@@ -22,12 +24,12 @@ ChangeProfitLoss = 0
 
 
 # Opening and reading csv file
-with open(budget_data_csv_path, newline="") as file:
+with open(InputFilePath, newline="") as file:
 
     data = csv.reader(file, delimiter=",")
 
     # Read the header row first
-    csv_header = next(file)
+    Header = next(file)
 
     # Read through each row of data after the header
     for row in data:
@@ -81,9 +83,8 @@ print(f"Average Change:  ${AverageProfitLoss}")
 print(f"Greatest Increase in Profits:  {BestMonth} (${MaxChange})")
 print(f"Greatest Decrease in Losses:  {WorstMonth} (${MinChange})")
 
-
 # Export a text file with the results
-with open(budget_file, "w") as outfile:
+with open(OutputFilePath, "w") as outfile:
 
     outfile.write("Financial Analysis\n")
     outfile.write("----------------------------\n")

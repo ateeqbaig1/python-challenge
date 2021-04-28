@@ -1,4 +1,4 @@
-Financial Analysiss
+Financial Analysis
 ----------------------------
 Total Months:  86
 Total:  $38382578
